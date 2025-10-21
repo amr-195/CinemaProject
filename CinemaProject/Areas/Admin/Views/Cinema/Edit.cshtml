@@ -1,0 +1,64 @@
+﻿@model CinemaProject.Models.Cinema
+@{
+    ViewData["Title"] = "Edit Cinema";
+}
+
+<div class="container mt-5">
+    <div class="card p-4">
+        <h3 class="mb-4 text-center">✏️ Edit Cinema</h3>
+
+        <form method="post" action="/Admin/Cinema/Edit" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" name="Id" value="@Model.Id" />
+
+            <div class="row g-3">
+                <!-- Cinema Name -->
+                <div class="col-md-6">
+                    <label class="form-label">Cinema Name</label>
+                    <input type="text" name="Name" value="@Model.Name" class="form-control" required />
+                </div>
+
+                <!-- Address -->
+                <div class="col-md-6">
+                    <label class="form-label">Address</label>
+                    <input type="text" name="Address" value="@Model.Address" class="form-control" />
+                </div>
+
+                <!-- Description -->
+                <div class="col-md-12">
+                    <label class="form-label">Description</label>
+                    <textarea name="Description" class="form-control" rows="4">@Model.Description</textarea>
+                </div>
+
+                <!-- Current Cinema Logo -->
+                <div class="col-md-6">
+                    <label class="form-label">Current Cinema Logo</label>
+                    @if (!string.IsNullOrEmpty(Model.CinemaLogo))
+                    {
+                        <div class="mb-2">
+                            <img src="~/Images/Cinemas/@Model.CinemaLogo" alt="Cinema Logo" width="150" class="img-thumbnail" />
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No Logo</p>
+                    }
+                </div>
+
+                <!-- Upload New Logo -->
+                <div class="col-md-6">
+                    <label class="form-label">Upload New Logo (Optional)</label>
+                    <input type="file" name="image" class="form-control" />
+                    <small class="text-muted">Leave empty to keep current logo</small>
+                </div>
+            </div>
+
+            <!-- Submit Buttons -->
+            <div class="mt-4 text-center">
+                <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+                <button type="button" class="btn btn-secondary px-4" onclick="window.location.href='/Admin/Cinema'">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

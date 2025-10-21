@@ -1,0 +1,67 @@
+﻿
+
+@model IEnumerable<CinemaProject.Models.Category>
+
+@{
+	ViewData["Title"] = "Categories";
+	var currentPage = Convert.ToInt32(ViewData["CurrentPage"] ?? 1);
+	var totalPages = Convert.ToInt32(ViewData["TotalPages"] ?? 1);
+}
+
+<div class="container mt-4">
+	<div class="d-flex justify-content-between align-items-center mb-3">
+		<h2>All Categories</h2>
+		
+		<a href="/Admin/Category/Create" class="btn btn-primary">
+			➕ Create New
+		</a>
+	</div>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Name</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (Model != null && Model.Any())
+			{
+				foreach (var item in Model)
+				{
+					<tr>
+						<td>@item.Id</td>
+						<td>@item.Name</td>
+						<td>
+							<a href="/Admin/Category/Edit/@item.Id" class="btn btn-sm btn-warning">Edit</a>
+							<a href="/Admin/Category/Delete/@item.Id" class="btn btn-sm btn-danger"
+							   onclick="return confirm('Are you sure?')">Delete</a>
+						</td>
+					</tr>
+				}
+			}
+			else
+			{
+				<tr>
+					<td colspan="3" class="text-center">No categories found.</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+
+	<!-- Pagination -->
+	<nav>
+		<ul class="pagination">
+			<li class="page-item @(currentPage <= 1 ? "disabled" : "")">
+				<a class="page-link" href="/Admin/Category/Index?currentPage=@(currentPage - 1)">Previous</a>
+			</li>
+			<li class="page-item active">
+				<span class="page-link">@currentPage of @totalPages</span>
+			</li>
+			<li class="page-item @(currentPage >= totalPages ? "disabled" : "")">
+				<a class="page-link" href="/Admin/Category/Index?currentPage=@(currentPage + 1)">Next</a>
+			</li>
+		</ul>
+	</nav>
+</div>

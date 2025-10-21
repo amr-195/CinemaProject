@@ -1,0 +1,70 @@
+﻿@model CinemaProject.Models.Actor
+@{
+    ViewData["Title"] = "Edit Actor";
+}
+
+<div class="container mt-5">
+    <div class="card p-4">
+        <h3 class="mb-4 text-center">✏️ Edit Actor</h3>
+
+        <form method="post" action="/Admin/Actor/Edit" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" name="Id" value="@Model.Id" />
+
+            <div class="row g-3">
+                <!-- First Name -->
+                <div class="col-md-6">
+                    <label class="form-label">First Name</label>
+                    <input type="text" name="FirstName" value="@Model.FirstName" class="form-control" required />
+                </div>
+
+                <!-- Last Name -->
+                <div class="col-md-6">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" name="LastName" value="@Model.LastName" class="form-control" required />
+                </div>
+
+                <!-- Bio -->
+                <div class="col-md-12">
+                    <label class="form-label">Biography</label>
+                    <textarea name="Bio" class="form-control" rows="4">@Model.Bio</textarea>
+                </div>
+
+                <!-- News -->
+                <div class="col-md-12">
+                    <label class="form-label">News</label>
+                    <textarea name="News" class="form-control" rows="3">@Model.News</textarea>
+                </div>
+
+                <!-- Current Profile Picture -->
+                <div class="col-md-6">
+                    <label class="form-label">Current Profile Picture</label>
+                    @if (!string.IsNullOrEmpty(Model.ProfilePicture))
+                    {
+                        <div class="mb-2">
+                            <img src="~/Images/Actors/@Model.ProfilePicture" alt="Actor Image" width="150" class="img-thumbnail" />
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No Image</p>
+                    }
+                </div>
+
+                <!-- Upload New Picture -->
+                <div class="col-md-6">
+                    <label class="form-label">Upload New Picture (Optional)</label>
+                    <input type="file" name="img" class="form-control" />
+                    <small class="text-muted">Leave empty to keep current image</small>
+                </div>
+            </div>
+
+            <!-- Submit Buttons -->
+            <div class="mt-4 text-center">
+                <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+                <button type="button" class="btn btn-secondary px-4" onclick="window.location.href='/Admin/Actor'">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

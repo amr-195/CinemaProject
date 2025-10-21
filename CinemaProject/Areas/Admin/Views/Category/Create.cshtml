@@ -1,0 +1,29 @@
+﻿
+@model CinemaProject.Models.Category
+@{
+    ViewData["Title"] = "Create Category";
+}
+
+<div class="container mt-5">
+    <div class="card p-4">
+        <h3 class="mb-4 text-center">🎬 Add New Category</h3>
+
+        <form method="post" action="/Admin/Category/Create" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div class="row g-3">
+                <!-- Category Name -->
+                <div class="col-md-6">
+                    <label class="form-label">Category Name</label>
+                    <input type="text" name="Name" class="form-control" placeholder="Enter category name" required />
+                </div>
+>
+
+            <!-- Submit Buttons -->
+            <div class="mt-4 text-center">
+                <button type="submit" class="btn btn-primary px-4">Create Category</button>
+                <button type="button" class="btn btn-secondary px-4" onclick="window.location.href='/Admin/Category'">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

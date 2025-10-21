@@ -1,0 +1,126 @@
+﻿
+@model CinemaProject.ViewModels.MovieVM
+
+@{
+    ViewData["Title"] = "Create Movie";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg p-4 rounded-4">
+        <h3 class="mb-4 text-center fw-bold text-primary">🎬 Add New Movie</h3>
+
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div class="row g-3">
+                <!-- Movie Name -->
+                <div class="col-md-6">
+                    <label class="form-label">Movie Name</label>
+                    <input name="Name" class="form-control" placeholder="Enter movie name" required />
+                </div>
+
+                <!-- Description -->
+                <div class="col-md-6">
+                    <label class="form-label">Description</label>
+                    <textarea name="Description" class="form-control" placeholder="Short movie description"></textarea>
+                </div>
+
+                <!-- Price -->
+                <div class="col-md-4">
+                    <label class="form-label">Ticket Price</label>
+                    <input name="Price" type="number" step="0.01" class="form-control" placeholder="e.g. 12.5" required />
+                </div>
+
+                <!-- Category -->
+                <div class="col-md-4">
+                    <label class="form-label">Category</label>
+                    <select name="CategoryId" class="form-select" required>
+                        <option value="">-- Select Category --</option>
+                        @if (Model.Categories != null)
+                        {
+                            foreach (var item in Model.Categories)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <!-- Cinema -->
+                <div class="col-md-4">
+                    <label class="form-label">Cinema</label>
+                    <select name="CinemaId" class="form-select" required>
+                        <option value="">-- Select Cinema --</option>
+                        @if (Model.Cinemas != null)
+                        {
+                            foreach (var item in Model.Cinemas)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <!-- Start Date -->
+                <div class="col-md-4">
+                    <label class="form-label">Start Date</label>
+                    <input name="StartDate" type="date" class="form-control" required />
+                </div>
+
+                <!-- End Date -->
+                <div class="col-md-4">
+                    <label class="form-label">End Date</label>
+                    <input name="EndDate" type="date" class="form-control" required />
+                </div>
+
+                <!-- Movie Status -->
+                <div class="col-md-4">
+                    <label class="form-label">Status</label>
+                    <select name="MovieStatus" class="form-select">
+                        <option value="0">Upcoming</option>
+                        <option value="1" selected>Now Showing</option>
+                        <option value="2">Ended</option>
+                    </select>
+                </div>
+
+                <!-- Quantity -->
+                <div class="col-md-6">
+                    <label class="form-label">Available Tickets</label>
+                    <input name="Quantity" type="number" class="form-control" placeholder="e.g. 100" value="100" />
+                </div>
+
+                <!-- Trailer URL -->
+                <div class="col-md-6">
+                    <label class="form-label">Trailer URL (Optional)</label>
+                    <input name="TrailerUrl" type="url" class="form-control" placeholder="https://youtube.com/..." />
+                </div>
+
+                <!-- Main Image -->
+                <div class="col-md-6">
+                    <label class="form-label">Main Image</label>
+                    <input type="file" name="mainImage" class="form-control" accept="image/*" />
+                </div>
+
+                <!-- Sub Images -->
+                <div class="col-md-6">
+                    <label class="form-label">Additional Images</label>
+                    <input type="file" name="file" multiple class="form-control" accept="image/*" />
+                </div>
+            </div>
+
+            <!-- Submit Buttons -->
+            <div class="mt-4 text-center">
+                <button type="submit" class="btn btn-primary px-5 py-2 rounded-3">
+                    <i class="bi bi-check-circle me-2"></i>Create Movie
+                </button>
+                <a asp-action="Index" class="btn btn-secondary ms-3 px-4 py-2 rounded-3">
+                    <i class="bi bi-x-circle me-2"></i>Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

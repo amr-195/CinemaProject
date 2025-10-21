@@ -1,0 +1,83 @@
+﻿@model IEnumerable<CinemaProject.Models.Cinema>
+
+@{
+    ViewData["Title"] = "Cinemas";
+    var currentPage = Convert.ToInt32(ViewData["CurrentPage"] ?? 1);
+    var totalPages = Convert.ToInt32(ViewData["TotalPages"] ?? 1);
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>All Cinemas</h2>
+        <a href="/Admin/Cinema/Create" class="btn btn-primary">
+            ➕ Create New
+        </a>
+    </div>
+
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Logo</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var cinema in Model)
+                {
+                    <tr>
+                        <td>@cinema.Id</td>
+
+                        <td>
+                            @if (!string.IsNullOrEmpty(cinema.CinemaLogo))
+                            {
+                                <img src="~/images/cinemas/@cinema.CinemaLogo" alt="@cinema.Name"
+                                     style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;" />
+                            }
+                            else
+                            {
+                                <span class="text-muted fst-italic">No logo</span>
+                            }
+                        </td>
+
+                        <td>@cinema.Name</td>
+                        <td>@(string.IsNullOrEmpty(cinema.Description) ? "-" : cinema.Description.Length > 60 ? cinema.Description.Substring(0, 60) + "..." : cinema.Description)</td>
+                        <td>@(string.IsNullOrEmpty(cinema.Address) ? "-" : cinema.Address.Length > 60 ? cinema.Address.Substring(0, 60) + "..." : cinema.Address)</td>
+
+                        <td>
+                            <a href="/Admin/Cinema/Edit/@cinema.Id" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="/Admin/Cinema/Delete/@cinema.Id" class="btn btn-sm btn-danger"
+                               onclick="return confirm('Are you sure you want to delete this cinema?')">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" class="text-center">No cinemas found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <nav>
+        <ul class="pagination">
+            <li class="page-item @(currentPage <= 1 ? "disabled" : "")">
+                <a class="page-link" href="/Admin/Cinema/Index?currentPage=@(currentPage - 1)">Previous</a>
+            </li>
+            <li class="page-item active">
+                <span class="page-link">@currentPage of @totalPages</span>
+            </li>
+            <li class="page-item @(currentPage >= totalPages ? "disabled" : "")">
+                <a class="page-link" href="/Admin/Cinema/Index?currentPage=@(currentPage + 1)">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>

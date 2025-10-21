@@ -1,0 +1,46 @@
+﻿@model CinemaProject.Models.Cinema
+@{
+    ViewData["Title"] = "Create Cinema";
+}
+
+<div class="container mt-5">
+    <div class="card p-4">
+        <h3 class="mb-4 text-center">🏢 Add New Cinema</h3>
+
+        <form method="post" action="/Admin/Cinema/Create" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div class="row g-3">
+                <!-- Name -->
+                <div class="col-md-6">
+                    <label class="form-label">Cinema Name</label>
+                    <input type="text" name="Name" class="form-control" placeholder="Enter cinema name" required />
+                </div>
+
+                <!-- Address -->
+                <div class="col-md-6">
+                    <label class="form-label">Address</label>
+                    <input type="text" name="Address" class="form-control" placeholder="Enter cinema address" />
+                </div>
+
+                <!-- Description -->
+                <div class="col-md-12">
+                    <label class="form-label">Description</label>
+                    <textarea name="Description" class="form-control" rows="4" placeholder="Write cinema description..."></textarea>
+                </div>
+
+                <!-- Cinema Logo -->
+                <div class="col-md-6">
+                    <label class="form-label">Cinema Logo</label>
+                    <input type="file" name="image" class="form-control" />
+                </div>
+            </div>
+
+            <!-- Submit Buttons -->
+            <div class="mt-4 text-center">
+                <button type="submit" class="btn btn-primary px-4">Create Cinema</button>
+                <button type="button" class="btn btn-secondary px-4" onclick="window.location.href='/Admin/Cinema'">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
